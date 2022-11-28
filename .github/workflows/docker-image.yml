@@ -1,0 +1,234 @@
+name: Docker-Build
+
+on:
+  watch:
+    types: [started]
+
+jobs:
+
+  build_amd_0721:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./DockerFiles/Dockerfile_amd0721
+          # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
+        platforms: linux/amd64
+          # 镜像推送时间
+        push: ${{ github.event_name != 'pull_request' }}
+          # 给清单打上多个标签
+        tags: |
+            ${{ secrets.DOCKER_USERNAME }}/silly:amd64_7.21
+  
+  build_amd_0807:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./DockerFiles/Dockerfile_amd0807
+          # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
+        platforms: linux/amd64
+          # 镜像推送时间
+        push: ${{ github.event_name != 'pull_request' }}
+          # 给清单打上多个标签
+        tags: |
+            ${{ secrets.DOCKER_USERNAME }}/silly:amd64_8.07
+
+  build_amd_0924:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./DockerFiles/Dockerfile_amd0924
+          # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
+        platforms: linux/amd64
+          # 镜像推送时间
+        push: ${{ github.event_name != 'pull_request' }}
+          # 给清单打上多个标签
+        tags: |
+            ${{ secrets.DOCKER_USERNAME }}/silly:amd64_9.24
+
+  build_arm64_0807:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./DockerFiles/Dockerfile_arm0807
+          # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
+        platforms: linux/arm64/v8
+          # 镜像推送时间
+        push: ${{ github.event_name != 'pull_request' }}
+          # 给清单打上多个标签
+        tags: |
+            ${{ secrets.DOCKER_USERNAME }}/silly:arm64_8.07
+
+  build_arm64_0914:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./DockerFiles/Dockerfile_arm0914
+          # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
+        platforms: linux/arm64/v8
+          # 镜像推送时间
+        push: ${{ github.event_name != 'pull_request' }}
+          # 给清单打上多个标签
+        tags: |
+            ${{ secrets.DOCKER_USERNAME }}/silly:arm64_9.14
+
+  build_arm64_0926:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./DockerFiles/Dockerfile_arm0926
+          # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
+        platforms: linux/arm64/v8
+          # 镜像推送时间
+        push: ${{ github.event_name != 'pull_request' }}
+          # 给清单打上多个标签
+        tags: |
+            ${{ secrets.DOCKER_USERNAME }}/silly:arm64_9.26
+
+  # del_runs:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Delete workflow runs
+  #       uses: Mattraks/delete-workflow-runs@main
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         repository: ${{ github.repository }}
+  #         retain_days: 1
+  #         keep_minimum_runs: 10
