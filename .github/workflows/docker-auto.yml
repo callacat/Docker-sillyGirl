@@ -197,7 +197,7 @@ jobs:
 
     - name: Build and push amd
       uses: docker/build-push-action@v2
-      # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+      if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       with:
         context: .
         file: ./DockerFiles/Dockerfile
