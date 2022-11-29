@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
@@ -67,9 +67,24 @@ jobs:
         regex_flags: 'gim'
         search_string: '${{ steps.readLastContent.outputs.content }}'
 
-    - name: 输出上次时间戳
+    - name: 格式化时间戳
       run: |
-          echo "${{ steps.lastTimeStamp.outputs.first_match }}"
+        sh ./Operation.sh > ./date.txt
+        cat ./date.txt
+
+    - name: 读取date.txt文件内容
+      id: readDateContent
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ./date.txt
+
+    - name: 取出日期
+      id: creatDate
+      uses: AsasInnab/regex-action@v1
+      with:
+        regex_pattern: '.+'
+        regex_flags: 'gim'
+        search_string: '${{ steps.readDateContent.outputs.content }}'
 
     - name: Login to DockerHub
       uses: docker/login-action@v1
@@ -90,14 +105,15 @@ jobs:
           # 给清单打上多个标签
         tags: |
             ${{ secrets.DOCKER_USERNAME }}/silly:amd64
-            ${{ secrets.DOCKER_USERNAME }}/silly:amd64_${{ steps.newTimeStamp.outputs.first_match }}
+            ${{ secrets.DOCKER_USERNAME }}/silly:amd64_${{ steps.creatDate.outputs.first_match }}
+            ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }}
 
   build_arm64:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
@@ -152,6 +168,25 @@ jobs:
       run: |
           echo "${{ steps.lastTimeStamp.outputs.first_match }}"
 
+    - name: 格式化时间戳
+      run: |
+        sh ./Operation.sh > ./date.txt
+        cat ./date.txt
+
+    - name: 读取date.txt文件内容
+      id: readDateContent
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ./date.txt
+
+    - name: 取出日期
+      id: creatDate
+      uses: AsasInnab/regex-action@v1
+      with:
+        regex_pattern: '.+'
+        regex_flags: 'gim'
+        search_string: '${{ steps.readDateContent.outputs.content }}'
+
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
@@ -171,7 +206,8 @@ jobs:
           # 给清单打上多个标签
         tags: |
             ${{ secrets.DOCKER_USERNAME }}/silly:arm64
-            ${{ secrets.DOCKER_USERNAME }}/silly:arm64_${{ steps.newTimeStamp.outputs.first_match }}
+            ${{ secrets.DOCKER_USERNAME }}/silly:arm64_${{ steps.creatDate.outputs.first_match }}
+            ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }}
 
   del_runs:
     runs-on: ubuntu-latest
