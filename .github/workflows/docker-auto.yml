@@ -98,7 +98,7 @@ jobs:
 
     - name: Build and push arm
       uses: docker/build-push-action@v2
-      # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+      if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       with:
         context: .
         file: ./DockerFiles/Dockerfile_arm
@@ -112,7 +112,7 @@ jobs:
 
     - name: Build and push amd
       uses: docker/build-push-action@v2
-      # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+      if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       with:
         context: .
         file: ./DockerFiles/Dockerfile
@@ -144,21 +144,21 @@ jobs:
 
     - name: 创建日期列表
       run: |
-        docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.newTimeStamp.outputs.first_match }} \
+        docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
           ${{ secrets.DOCKER_USERNAME }}/silly:amd64
 
     - name: 设置日期列表
       run: |
-        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.newTimeStamp.outputs.first_match }} \
+        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
           --os linux --arch arm64 --variant v8
-        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.newTimeStamp.outputs.first_match }} \
+        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
           ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
           --os linux --arch amd64
 
     - name: 推送日期列表
-      run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.newTimeStamp.outputs.first_match }}
+      run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }}
 
   del_runs:
     runs-on: ubuntu-latest
