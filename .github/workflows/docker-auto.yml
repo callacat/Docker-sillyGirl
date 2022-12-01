@@ -140,6 +140,7 @@ jobs:
           --os linux --arch amd64
 
     - name: 推送latest列表
+      if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly
 
     - name: 创建日期列表
@@ -158,6 +159,7 @@ jobs:
           --os linux --arch amd64
 
     - name: 推送日期列表
+      if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }}
 
   del_runs:
