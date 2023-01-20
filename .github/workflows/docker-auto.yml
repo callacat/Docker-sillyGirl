@@ -157,7 +157,7 @@ jobs:
           --os linux --arch amd64
         docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm \
-          --os linux --arch arm64 --variant v7
+          --os linux --arch arm --variant v7
 
     - name: 推送latest列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
