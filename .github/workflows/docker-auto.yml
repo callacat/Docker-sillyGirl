@@ -106,11 +106,9 @@ jobs:
         file: ./DockerFiles/Dockerfile_arm
           # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
         platforms: linux/arm64
-          # 镜像推送时间
-        push: ${{ github.event_name != 'pull_request' }}
+        push: true
           # 给清单打上多个标签
-        tags: |
-            ${{ secrets.DOCKER_USERNAME }}/silly:arm64
+        tags: ${{ secrets.DOCKER_USERNAME }}/silly:arm64
 
     - name: Build and push armv7
       uses: docker/build-push-action@v2
@@ -120,11 +118,9 @@ jobs:
         file: ./DockerFiles/Dockerfile_arm
           # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
         platforms: linux/arm/v7
-          # 镜像推送时间
-        push: ${{ github.event_name != 'pull_request' }}
+        push: true
           # 给清单打上多个标签
-        tags: |
-            ${{ secrets.DOCKER_USERNAME }}/silly:armv7
+        tags: ${{ secrets.DOCKER_USERNAME }}/silly:armv7
 
     - name: Build and push amd
       uses: docker/build-push-action@v2
@@ -134,14 +130,9 @@ jobs:
         file: ./DockerFiles/Dockerfile
           # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
         platforms: linux/amd64
-          # 镜像推送时间
-        push: ${{ github.event_name != 'pull_request' }}
+        push: true
           # 给清单打上多个标签
-        tags: |
-            ${{ secrets.DOCKER_USERNAME }}/silly:amd64
-
-    - name: 更新镜像清单
-      run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/silly:amd64
 
     - name: 创建latest列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
@@ -154,19 +145,19 @@ jobs:
     - name: 设置latest列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       run: |
-        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:latest \
+        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
           --os linux --arch arm64 --variant v8
-        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:latest \
+        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
           ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
           --os linux --arch amd64
-        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:latest \
+        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
           ${{ secrets.DOCKER_USERNAME }}/silly:armv7 \
           --os linux --arch arm --variant v7
 
     - name: 推送latest列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
-      run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly:latest
+      run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly
 
     - name: 创建日期列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
