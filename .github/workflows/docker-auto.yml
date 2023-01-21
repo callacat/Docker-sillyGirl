@@ -139,7 +139,10 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/silly:amd64
 
     - name: 创建latest列表
+<<<<<<< HEAD
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+=======
+>>>>>>> parent of 5a3f3d6 (update)
       run: |
         docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
@@ -148,7 +151,10 @@ jobs:
       # ${{ secrets.DOCKER_USERNAME }}/silly:armv7
         
     - name: 设置latest列表
+<<<<<<< HEAD
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+=======
+>>>>>>> parent of 5a3f3d6 (update)
       run: |
         docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
@@ -165,7 +171,10 @@ jobs:
       run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly
 
     - name: 创建日期列表
+<<<<<<< HEAD
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+=======
+>>>>>>> parent of 5a3f3d6 (update)
       run: |
         docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
@@ -173,7 +182,10 @@ jobs:
       # ${{ secrets.DOCKER_USERNAME }}/silly:armv7
 
     - name: 设置日期列表
+<<<<<<< HEAD
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+=======
+>>>>>>> parent of 5a3f3d6 (update)
       run: |
         docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
