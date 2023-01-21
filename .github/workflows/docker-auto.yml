@@ -143,7 +143,7 @@ jobs:
     - name: 创建latest列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       run: |
-        docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly \
+        docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly:latest \
           ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
           ${{ secrets.DOCKER_USERNAME }}/silly:armv7
@@ -151,19 +151,19 @@ jobs:
     - name: 设置latest列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       run: |
-        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
+        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:latest \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
           --os linux --arch arm64 --variant v8
-        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
+        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:latest \
           ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
           --os linux --arch amd64
-        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
+        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:latest \
           ${{ secrets.DOCKER_USERNAME }}/silly:armv7 \
           --os linux --arch arm --variant v7
 
     - name: 推送latest列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
-      run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly
+      run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly:latest
 
     - name: 创建日期列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
