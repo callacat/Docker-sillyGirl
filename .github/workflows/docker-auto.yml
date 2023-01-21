@@ -24,6 +24,7 @@ jobs:
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v2
+      version: v0.10.6
 
     - name: Available platforms
       run: echo ${{ steps.buildx.outputs.platforms }}
@@ -115,7 +116,7 @@ jobs:
       if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       with:
         context: .
-        file: ./DockerFiles/Dockerfile_arm_v7
+        file: ./DockerFiles/Dockerfile_arm
           # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
         platforms: linux/arm/v7
           # 镜像推送时间
@@ -141,7 +142,7 @@ jobs:
     - name: 创建latest列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       run: |
-        docker manifest create --insecure ${{ secrets.DOCKER_USERNAME }}/silly \
+        docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
           ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
           ${{ secrets.DOCKER_USERNAME }}/silly:armv7
