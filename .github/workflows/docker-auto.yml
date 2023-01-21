@@ -144,8 +144,8 @@ jobs:
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       run: |
         docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly \
-          ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
           ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
+          ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
           ${{ secrets.DOCKER_USERNAME }}/silly:armv7
         
     - name: 设置latest列表
