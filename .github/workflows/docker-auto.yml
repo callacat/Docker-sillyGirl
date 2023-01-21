@@ -140,7 +140,10 @@ jobs:
 
     - name: 创建latest列表
 <<<<<<< HEAD
+<<<<<<< HEAD
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+=======
+>>>>>>> parent of 5a3f3d6 (update)
 =======
 >>>>>>> parent of 5a3f3d6 (update)
       run: |
@@ -152,7 +155,10 @@ jobs:
         
     - name: 设置latest列表
 <<<<<<< HEAD
+<<<<<<< HEAD
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+=======
+>>>>>>> parent of 5a3f3d6 (update)
 =======
 >>>>>>> parent of 5a3f3d6 (update)
       run: |
@@ -172,7 +178,10 @@ jobs:
 
     - name: 创建日期列表
 <<<<<<< HEAD
+<<<<<<< HEAD
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+=======
+>>>>>>> parent of 5a3f3d6 (update)
 =======
 >>>>>>> parent of 5a3f3d6 (update)
       run: |
@@ -183,7 +192,10 @@ jobs:
 
     - name: 设置日期列表
 <<<<<<< HEAD
+<<<<<<< HEAD
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+=======
+>>>>>>> parent of 5a3f3d6 (update)
 =======
 >>>>>>> parent of 5a3f3d6 (update)
       run: |
