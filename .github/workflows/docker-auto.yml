@@ -98,7 +98,7 @@ jobs:
 
     - name: Build and push arm64
       uses: docker/build-push-action@v2
-      if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+      # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       with:
         context: .
         file: ./DockerFiles/Dockerfile_arm
@@ -112,10 +112,10 @@ jobs:
 
     - name: Build and push armv7
       uses: docker/build-push-action@v2
-      if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+      # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       with:
         context: .
-        file: ./DockerFiles/Dockerfile_arm
+        file: ./DockerFiles/Dockerfile_arm_v7
           # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
         platforms: linux/arm/v7
           # 镜像推送时间
@@ -126,7 +126,7 @@ jobs:
 
     - name: Build and push amd
       uses: docker/build-push-action@v2
-      if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+      # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       with:
         context: .
         file: ./DockerFiles/Dockerfile
@@ -149,9 +149,8 @@ jobs:
       run: |
         docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
-          ${{ secrets.DOCKER_USERNAME }}/silly:amd64 
-
-      # ${{ secrets.DOCKER_USERNAME }}/silly:armv7
+          ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
+          ${{ secrets.DOCKER_USERNAME }}/silly:armv7
         
     - name: 设置latest列表
 <<<<<<< HEAD
@@ -168,9 +167,9 @@ jobs:
         docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
           ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
           --os linux --arch amd64
-      # docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
-      #   ${{ secrets.DOCKER_USERNAME }}/silly:armv7 \
-      #   --os linux --arch arm --variant v7
+        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
+          ${{ secrets.DOCKER_USERNAME }}/silly:armv7 \
+          --os linux --arch arm --variant v7
 
     - name: 推送latest列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
@@ -187,8 +186,8 @@ jobs:
       run: |
         docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
           ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
-          ${{ secrets.DOCKER_USERNAME }}/silly:amd64
-      # ${{ secrets.DOCKER_USERNAME }}/silly:armv7
+          ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
+          ${{ secrets.DOCKER_USERNAME }}/silly:armv7
 
     - name: 设置日期列表
 <<<<<<< HEAD
@@ -205,9 +204,9 @@ jobs:
         docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
           ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
           --os linux --arch amd64
-      # docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
-      #   ${{ secrets.DOCKER_USERNAME }}/silly:armv7 \
-      #   --os linux --arch arm --variant v7
+        docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
+          ${{ secrets.DOCKER_USERNAME }}/silly:armv7 \
+          --os linux --arch arm --variant v7
 
     - name: 推送日期列表
       # if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
