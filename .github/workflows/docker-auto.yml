@@ -24,8 +24,8 @@ jobs:
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v2
-      # with:
-      #   version: v0.9.1
+      with:
+        version: v0.9.1
 
     - name: Available platforms
       run: echo ${{ steps.buildx.outputs.platforms }}
@@ -160,13 +160,13 @@ jobs:
       if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
       run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }}
 
-    # - name: 创建latest列表
-    #   if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
-    #   run: |
-    #     docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly:latest \
-    #       ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
-    #       ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
-    #       ${{ secrets.DOCKER_USERNAME }}/silly:armv7
+    - name: 创建latest列表
+      if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
+      run: |
+        docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly:latest \
+          ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
+          ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
+          ${{ secrets.DOCKER_USERNAME }}/silly:armv7
 
     # - name: 设置latest列表
     #   if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
@@ -197,5 +197,5 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          retain_days: 10
+          retain_days: 7
           keep_minimum_runs: 5
