@@ -6,8 +6,8 @@ on:
       - main
   watch:
     types: [started]
-  schedule:
-    - cron: 5 */12 * * *
+  # schedule:
+  #   - cron: 5 */12 * * *
 
 jobs:
 
@@ -73,11 +73,6 @@ jobs:
         timestamp=${{ steps.lastTimeStamp.outputs.timestamp }}
         date=$(TZ=Asia/Shanghai date -d "@${timestamp}" "+%m-%d %T")
         echo "时间为: $date"
-
-    - name: 读取最新compile_time.go文件内容保存到变量
-      id: readLastContent
-      run: |
-        echo "::set-output name=content::$(cat ./lastTime.txt)"
 
     - name: Login to Docker Hub
       if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
