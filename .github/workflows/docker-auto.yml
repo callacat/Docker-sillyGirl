@@ -45,7 +45,7 @@ jobs:
     - name: 转换时间戳
       id: newTimeStamp
       run: |
-        date_string=$(echo "${{ steps.readNewContent.outputs.content }}"" | cut -d '"' -f2)
+        date_string=$(echo "${{ steps.readNewContent.outputs.content }}" | cut -d '"' -f2)
         timestamp=$(date -d "${date_string}" +%s)
         echo "::set-output name=timestamp::${timestamp}"
             
