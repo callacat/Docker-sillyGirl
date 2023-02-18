@@ -39,58 +39,45 @@ jobs:
          
     - name: 读取最新compile_time.go文件内容保存到变量
       id: readNewContent
-      uses: juliangruber/read-file-action@v1
-      with:
-        path: ./newTime.txt
-
-    - name: 查找最新时间戳
+      run: |
+        echo "::set-output name=content::$(cat ./newTime.txt)"
+            
+    - name: 转换时间戳
       id: newTimeStamp
-      uses: AsasInnab/regex-action@v1
-      with:
-        regex_pattern: '[0-9]+'
-        regex_flags: 'gim'
-        search_string: '${{ steps.readNewContent.outputs.content }}'
-
-    - name: 输出最新时间戳
       run: |
-        echo "${{ steps.newTimeStamp.outputs.first_match }}"
+        date_string=$(echo ${{ steps.readNewContent.outputs.content }} | cut -d '"' -f2)
+        timestamp=$(date -d "${date_string}" +%s)
+        echo "::set-output name=timestamp::${timestamp}"
+            
+    - name: 输出时间
+      run: |
+        timestamp=${{ steps.newTimeStamp.outputs.timestamp }}
+        date=$(TZ=Asia/Shanghai date -d "@${timestamp}" "+%m-%d %T")
+        echo "时间为: $date"
   
-    - name: 读取上一次compile_time.go文件内容保存到变量
+    - name: 读取最新compile_time.go文件内容保存到变量
       id: readLastContent
-      uses: juliangruber/read-file-action@v1
-      with:
-        path: ./lastTime.txt
+      run: |
+        echo "::set-output name=content::$(cat ./lastTime.txt)"
 
-    - name: 查找上次时间戳
+    - name: 转换时间戳
       id: lastTimeStamp
-      uses: AsasInnab/regex-action@v1
-      with:
-        regex_pattern: '[0-9]+'
-        regex_flags: 'gim'
-        search_string: '${{ steps.readLastContent.outputs.content }}'
-
-    - name: 输出上次时间戳
       run: |
-          echo "${{ steps.lastTimeStamp.outputs.first_match }}"
+        date_string=$(echo ${{ steps.readLastContent.outputs.content }} | cut -d '"' -f2)
+        timestamp=$(date -d "${date_string}" +%s)
+        echo "::set-output name=timestamp::${timestamp}"
 
-    - name: 格式化时间戳
-      run: |
-        sh ./Operation.sh > ./date.txt
-        cat ./date.txt
-
-    - name: 读取date.txt文件内容
-      id: readDateContent
-      uses: juliangruber/read-file-action@v1
-      with:
-        path: ./date.txt
-
-    - name: 取出日期
+    - name: 输出时间
       id: creatDate
-      uses: AsasInnab/regex-action@v1
-      with:
-        regex_pattern: '.+'
-        regex_flags: 'gim'
-        search_string: '${{ steps.readDateContent.outputs.content }}'
+      run: |
+        timestamp=${{ steps.lastTimeStamp.outputs.timestamp }}
+        date=$(TZ=Asia/Shanghai date -d "@${timestamp}" "+%m-%d %T")
+        echo "时间为: $date"
+
+    - name: 读取最新compile_time.go文件内容保存到变量
+      id: readLastContent
+      run: |
+        echo "::set-output name=content::$(cat ./lastTime.txt)"
 
     - name: Login to Docker Hub
       if: ${{ steps.newTimeStamp.outputs.first_match != steps.lastTimeStamp.outputs.first_match }}
