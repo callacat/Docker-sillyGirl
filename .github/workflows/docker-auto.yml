@@ -46,6 +46,7 @@ jobs:
       id: newTimeStamp
       run: |
         date_string=$(echo "${{ steps.readNewContent.outputs.content }}" | cut -d '"' -f2)
+        echo $date_string
         timestamp=$(date -d "${date_string}" +%s)
         echo "::set-output name=timestamp::${timestamp}"
             
