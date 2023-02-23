@@ -1,9 +1,11 @@
 name: Docker-Build
 
 on:
-  watch:
-    types: [started]
-
+  # watch:
+  #   types: [started]
+  push:
+    paths:
+      - '.github/workflows/docker-image.yml'
 jobs:
 
   build_amd_0721:
