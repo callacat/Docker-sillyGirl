@@ -1,0 +1,133 @@
+name: Auto-Build
+
+on:
+  push:
+    paths:
+      - '.github/workflows/docker-autobuild.yml'
+    repositories:
+      - owner: binary
+        name: cdle
+  # schedule:
+  #   - cron: 5 */6 * * *
+
+jobs:
+
+  build_Docker:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v2
+      with:
+        version: v0.9.1
+
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+
+    - name: Get compile time
+      run: |
+        chmod +x Operation.sh
+        ./Operation.sh
+
+    - name: 测试
+      run: echo "The compile time is ${{ steps.get_compile_time.stdout }}"
+    # - name: Login to Docker Hub
+    #   uses: docker/login-action@v2
+    #   with:
+    #     username: ${{ secrets.DOCKER_USERNAME }}
+    #     password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # - name: Build and push arm64
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     context: .
+    #     file: ./DockerFiles/Dockerfile_arm
+    #       # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
+    #     platforms: linux/arm64
+    #     push: true
+    #       # 给清单打上多个标签
+    #     tags: ${{ secrets.DOCKER_USERNAME }}/silly:arm64
+
+    # - name: Build and push armv7
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     context: .
+    #     file: ./DockerFiles/Dockerfile_arm
+    #       # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
+    #     platforms: linux/arm/v7
+    #     push: true
+    #       # 给清单打上多个标签
+    #     tags: ${{ secrets.DOCKER_USERNAME }}/silly:armv7
+
+    # - name: Build and push amd64
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     context: .
+    #     file: ./DockerFiles/Dockerfile
+    #       # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
+    #     platforms: linux/amd64
+    #     push: true
+    #       # 给清单打上多个标签
+    #     tags: ${{ secrets.DOCKER_USERNAME }}/silly:amd64
+
+    # - name: 创建日期列表
+    #   run: |
+    #     docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:armv7
+
+    # - name: 设置日期列表
+    #   run: |
+    #     docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
+    #       --os linux --arch arm64 --variant v8
+    #     docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
+    #       --os linux --arch amd64
+    #     docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }} \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:armv7 \
+    #       --os linux --arch arm --variant v7
+
+    # - name: 推送日期列表
+    #   run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly:${{ steps.creatDate.outputs.first_match }}
+
+    # - name: 创建latest列表
+    #   run: |
+    #     docker manifest create ${{ secrets.DOCKER_USERNAME }}/silly:latest \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:armv7
+
+    # - name: 设置latest列表
+    #   run: |
+    #     docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:arm64 \
+    #       --os linux --arch arm64 --variant v8
+    #     docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:amd64 \
+    #       --os linux --arch amd64
+    #     docker manifest annotate ${{ secrets.DOCKER_USERNAME }}/silly \
+    #       ${{ secrets.DOCKER_USERNAME }}/silly:armv7 \
+    #       --os linux --arch arm --variant v7
+
+    # - name: 更新latest镜像清单
+    #   run: docker manifest push ${{ secrets.DOCKER_USERNAME }}/silly
+
+  del_runs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 7
+          keep_minimum_runs: 5
