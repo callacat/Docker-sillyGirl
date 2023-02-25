@@ -32,14 +32,13 @@ jobs:
       run: echo ${{ steps.buildx.outputs.platforms }}
 
     - name: 获取更新日期
-      id: get_compile_time
       run: |
         v=`curl https://raw.githubusercontent.com/cdle/binary/main/compile_time.go --silent | tr -cd "[0-9]"`
         creatDate=$((v/1000))
-        echo $(date '+%Y-%m-%d' -d @$creatDate)
+        echo "compile_time=$(date '+%Y-%m-%d' -d @$creatDate)"  >> $GITHUB_ENV
 
-    # - name: 测试
-    #   run: echo "The compile time is ${{ env. }}"
+    - name: 测试
+      run: echo "The compile time is ${{ env.compile_time }}"
     # - name: Login to Docker Hub
     #   uses: docker/login-action@v2
     #   with:
