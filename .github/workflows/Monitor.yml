@@ -37,8 +37,11 @@ jobs:
           echo "::set-output name=trigger_build::false"
           echo ${{steps.check_commit.outputs.trigger_build}}
           echo "action_state=yellow" >> $GITHUB_ENV
-          echo "${{env.action_state}}"
         fi
+
+    - name: 测试
+      run: echo "${{env.action_state}}"
+
 
     - name: Trigger build
       if: steps.check_commit.outputs.trigger_build == 'true'
