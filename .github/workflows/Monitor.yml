@@ -31,6 +31,7 @@ jobs:
           echo "$latest_sha" > last_sha.txt
           # Set output variable to true
           echo "name=trigger_build::true" >> GITHUB_OUTPUT
+          echo "${{ steps.check_commit.outputs.name }}"
         else
           echo "No new commit in other repository."
           # Set output variable to false
@@ -38,7 +39,7 @@ jobs:
         fi
 
     - name: Trigger build
-      if: steps.check_commit.outputs.name == 'true'
+      if: ${{ steps.check_commit.outputs.name == 'true' }}
       run: |
         curl -L \
           -X POST \
@@ -49,7 +50,7 @@ jobs:
           -d '{"event_type": "docker-build"}'
 
     - name: Commit changes
-      if: steps.check_commit.outputs.name == 'true'
+      if: ${{ steps.check_commit.outputs.name == 'true' }}
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -57,7 +58,7 @@ jobs:
         git commit -m "Update last_sha.txt"
 
     - name: Push changes
-      if: steps.check_commit.outputs.name == 'true'
+      if: ${{ steps.check_commit.outputs.name == 'true' }}
       uses: ad-m/github-push-action@v0.6.0
       with:
         branch: main
