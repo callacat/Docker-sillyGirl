@@ -7,9 +7,6 @@ on:
   schedule:
     - cron: '12 */6 * * *'   # 每6小时执行一次
 
-env:
-  run_workflow: "flase"
-
 jobs:
 
   monitor:
@@ -24,6 +21,7 @@ jobs:
         fetch-depth: 0 
 
     - name: Check if other repository has new commits
+      id: pass
       run: |
         # Read the last SHA from the file
         last_sha=$(cat last_sha.txt)
@@ -33,10 +31,8 @@ jobs:
         if [[ $latest_sha != $last_sha ]]; then
           echo "New commit detected in other repository!"
           # Update the last SHA with the latest SHA
-          echo ${{ env.run_workflow }}
-          echo "true" >> ${{ env.run_workflow }}
+          echo "pass=true" >> GITHUB_OUTPUT
           echo "$latest_sha" > last_sha.txt
-          echo ${{ env.run_workflow }}
           # Trigger the workflow
           curl -L \
           -X POST \
@@ -50,7 +46,7 @@ jobs:
         fi
 
     - name: Commit changes
-      if: ${{ env.run_workflow == 'true' }}
+      if: ${{ steps.pass.outputs.pass == true }}
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -58,7 +54,7 @@ jobs:
         git commit -m "Update last_sha.txt"
 
     - name: Push changes
-      if: ${{ env.run_workflow == 'true' }}
+      if: ${{ steps.pass.outputs.pass == true }}
       uses: ad-m/github-push-action@v0.6.0
       with:
         branch: main
