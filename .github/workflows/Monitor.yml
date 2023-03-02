@@ -48,7 +48,7 @@ jobs:
         fi
 
     - name: Commit changes
-      if: ${{ env.run_workflow }}
+      if: ${{ env.run_workflow == true }}
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -56,7 +56,7 @@ jobs:
         git commit -m "Update last_sha.txt"
 
     - name: Push changes
-      if: ${{ env.run_workflow }}
+      if: ${{ env.run_workflow == true }}
       uses: ad-m/github-push-action@v0.6.0
       with:
         branch: main
