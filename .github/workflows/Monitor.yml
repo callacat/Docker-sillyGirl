@@ -5,7 +5,7 @@ on:
     paths:
       - '.github/workflows/Monitor.yml'
   schedule:
-    - cron: '12 */6 * * *'   # 每6小时执行一次
+    - cron: '55 */6 * * *'   # 每6小时执行一次
 
 env:
   run_workflow: flase
