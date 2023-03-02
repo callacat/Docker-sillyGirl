@@ -31,12 +31,12 @@ jobs:
           # Update the last SHA with the latest SHA
           echo "$latest_sha" > last_sha.txt
           # Set output variable to true
-          echo "trigger_build='true'" >> GITHUB_OUTPUT
+          echo "trigger_build=$date" >> GITHUB_OUTPUT
           echo "${{ steps.check_commit.outputs.trigger_build }}"
         else
           echo "No new commit in other repository."
           # Set output variable to false
-          echo "trigger_build='false'" >> GITHUB_OUTPUT
+          # echo "trigger_build='false'" >> GITHUB_OUTPUT
         fi
 
     - name: Trigger build
