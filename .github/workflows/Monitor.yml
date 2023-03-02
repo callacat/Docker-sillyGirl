@@ -32,6 +32,7 @@ jobs:
           echo "New commit detected in other repository!"
           # Update the last SHA with the latest SHA
           echo "pass=true" >> GITHUB_OUTPUT
+          echo "${{ steps.pass.outputs.pass }}"
           echo "$latest_sha" > last_sha.txt
           # Trigger the workflow
           curl -L \
