@@ -33,8 +33,10 @@ jobs:
         if [[ $latest_sha != $last_sha ]]; then
           echo "New commit detected in other repository!"
           # Update the last SHA with the latest SHA
-          echo "export run_workflow=true" >> ENV.run_workflow
+          echo ${{ env.run_workflow }}
+          echo "export run_workflow=true" >> ${{ env.run_workflow }}
           echo "$latest_sha" > last_sha.txt
+          echo ${{ env.run_workflow }}
           # Trigger the workflow
           curl -L \
           -X POST \
