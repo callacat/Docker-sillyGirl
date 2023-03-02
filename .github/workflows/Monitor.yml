@@ -1,9 +1,9 @@
 name: Monitor Other Repository
 
 on:
-  push:
-    paths:
-      - '.github/workflows/Monitor.yml'
+  # push:
+  #   paths:
+  #     - '.github/workflows/Monitor.yml'
   schedule:
     - cron: '12 */6 * * *'   # 每6小时执行一次
 
@@ -29,20 +29,12 @@ jobs:
           # Update the last SHA with the latest SHA
           echo "$latest_sha" > last_sha.txt
           # Set output variable to true
-          # echo "::set-output name=trigger_build::true"
-          # echo ${{steps.check_commit.outputs.trigger_build}}
           echo "trigger_build=true" >> $GITHUB_ENV
         else
           echo "No new commit in other repository."
           # Set output variable to false
-          # echo "::set-output name=trigger_build::false"
-          # echo ${{steps.check_commit.outputs.trigger_build}}
           echo "trigger_build=false" >> $GITHUB_ENV
         fi
-
-    - name: 测试
-      run: echo "${{ env.trigger_build }}"
-
 
     - name: Trigger build
       if: env.trigger_build == 'true'
