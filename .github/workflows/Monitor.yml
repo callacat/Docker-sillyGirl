@@ -7,7 +7,7 @@ on:
   schedule:
     - cron: '12 */6 * * *'   # 每6小时执行一次
 
-ENV:
+env:
   run_workflow: flase
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
         if [[ $latest_sha != $last_sha ]]; then
           echo "New commit detected in other repository!"
           # Update the last SHA with the latest SHA
-          echo "${{ env.run_workflow }}==true"
+          echo "::set-env name=run_workflow::true"
           echo "$latest_sha" > last_sha.txt
           # Trigger the workflow
           curl -L \
@@ -48,7 +48,7 @@ jobs:
         fi
 
     - name: Commit changes
-      if: env.run_workflow == 'true'
+      if: {{ env.run_workflow == 'true' }}
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -56,7 +56,7 @@ jobs:
         git commit -m "Update last_sha.txt"
 
     - name: Push changes
-      if: env.run_workflow == 'true'
+      if: {{ env.run_workflow == 'true' }}
       uses: ad-m/github-push-action@v0.6.0
       with:
         branch: main
