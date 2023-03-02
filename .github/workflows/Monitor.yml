@@ -40,7 +40,7 @@ jobs:
         fi
 
     - name: Trigger build
-      if: ${{ steps.check_commit.outputs.trigger_build == 'true' }}
+      if: ${{ steps.check_commit.outputs.trigger_build != '' }}
       run: |
         curl -L \
           -X POST \
@@ -51,7 +51,7 @@ jobs:
           -d '{"event_type": "docker-build"}'
 
     - name: Commit changes
-      if: ${{ steps.check_commit.outputs.trigger_build == 'true' }}
+      if: ${{ steps.check_commit.outputs.trigger_build != '' }}
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -59,7 +59,7 @@ jobs:
         git commit -m "Update last_sha.txt"
 
     - name: Push changes
-      if: ${{ steps.check_commit.outputs.trigger_build == 'true' }}
+      if: ${{ steps.check_commit.outputs.trigger_build != '' }}
       uses: ad-m/github-push-action@v0.6.0
       with:
         branch: main
