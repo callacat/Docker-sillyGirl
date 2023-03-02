@@ -11,6 +11,7 @@ jobs:
   monitor:
     runs-on: ubuntu-latest
     steps:
+
     - uses: actions/checkout@v2
       with:
         persist-credentials: false
@@ -29,11 +30,11 @@ jobs:
           # Update the last SHA with the latest SHA
           echo "$latest_sha" > last_sha.txt
           # Set output variable to true
-          echo "::set-output name=trigger_build::true"
+          echo "name=trigger_build::true" >> GITHUB_OUTPUT
         else
           echo "No new commit in other repository."
           # Set output variable to false
-          echo "::set-output name=trigger_build::false"
+          echo "name=trigger_build::false" >> GITHUB_OUTPUT
         fi
 
     - name: Trigger build
