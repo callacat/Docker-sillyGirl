@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-
+  schedule:
+    - cron: '12 6 * * 1'
 jobs:
   del_runs:
     runs-on: ubuntu-latest
