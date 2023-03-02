@@ -1,11 +1,11 @@
 name: Monitor Other Repository
 
 on:
-  push:
-    paths:
-      - '.github/workflows/Monitor.yml'
+  # push:
+  #   paths:
+  #     - '.github/workflows/Monitor.yml'
   schedule:
-    - cron: '55 */6 * * *'   # 每6小时执行一次
+    - cron: '12 */6 * * *'   # 每6小时执行一次
 
 env:
   run_workflow: flase
@@ -33,7 +33,7 @@ jobs:
         if [[ $latest_sha != $last_sha ]]; then
           echo "New commit detected in other repository!"
           # Update the last SHA with the latest SHA
-          echo "::set-env name=run_workflow::true"
+          echo "export run_workflow=true"
           echo "$latest_sha" > last_sha.txt
           # Trigger the workflow
           curl -L \
