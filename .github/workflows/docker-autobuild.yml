@@ -1,9 +1,9 @@
 name: Auto-Build
 
 on:
-  # push:
-    # paths:
-    #   - '.github/workflows/docker-autobuild.yml'
+  push:
+    paths:
+      - '.github/workflows/docker-autobuild.yml'
   repository_dispatch:
     types: [docker-build]
 
