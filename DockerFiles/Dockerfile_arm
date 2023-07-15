@@ -10,4 +10,4 @@ RUN mkdir /usr/local/sillyGirl && cd /usr/local/sillyGirl \
     && mv sillyGirl_linux_arm64 sillyGirl && chmod 777 sillyGirl \
     && apk add --no-cache tzdata && cp /usr/share/zoneinfo/$TZ /etc/localtime
     
-CMD ["/usr/local/sillyGirl/sillyGirl"]
+ENTRYPOINT ["/usr/local/sillyGirl/sillyGirl"]
