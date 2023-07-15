@@ -20,13 +20,12 @@ monitor_output() {
             echo "重启当前容器..."
             restart_container  # 出现指定字样时重启当前容器
         fi
-    done < <(/usr/local/sillyGirl/sillyGirl -t)
+    done 
 }
 
 # 主函数
 main() {
-    start_sillyGirl  # 启动sillyGirl程序
-    monitor_output   # 监控程序输出并执行操作
+    start_sillyGirl | monitor_output  # 使用管道符号连接两个命令
 }
 
 main "$@"
