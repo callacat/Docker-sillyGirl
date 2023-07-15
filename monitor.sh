@@ -8,7 +8,8 @@ start_sillyGirl() {
 
 # 重启当前容器
 restart_container() {
-    # echo "Restarting container..."
+    echo "不进入静默模式，重启当前容器..."
+    leep 3
     kill -s TERM 1
 }
 
@@ -17,8 +18,6 @@ monitor_output() {
     echo "进入监控程序..."
     while IFS= read -r line; do
         if echo "$line" | grep -q "程序以静默形式运行"; then
-            # echo "重启当前容器..."
-            # sleep 3
             restart_container  # 出现指定字样时重启当前容器
         fi
         echo "$line"  # 输出到标准输出（stdout）
