@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # 每次启动容器复制傻妞到 /usr/local/sillyGirl
-cp /etc/sillyplus/sillyGirl /usr/local/sillyGirl/sillyGirl
+# cp /etc/sillyplus/sillyGirl /usr/local/sillyGirl/sillyGirl
 
 # 启动sillyGirl程序
 start_sillyGirl() {
