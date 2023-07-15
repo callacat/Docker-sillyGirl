@@ -14,12 +14,13 @@ restart_container() {
 
 # 监控程序输出并执行操作
 monitor_output() {
-    /usr/local/sillyGirl/sillyGirl -t | while read -r line; do
+    echo "进入监控程序..."
+    while IFS= read -r line; do
         if echo "$line" | grep -q "程序以静默形式运行"; then
             echo "重启当前容器..."
             restart_container  # 出现指定字样时重启当前容器
         fi
-    done
+    done < <(/usr/local/sillyGirl/sillyGirl -t)
 }
 
 # 主函数
