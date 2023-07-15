@@ -6,6 +6,7 @@ on:
       - '.github/workflows/docker-autobuild.yml'
   repository_dispatch:
     types: [docker-build]
+  workflow_dispatch:
 
 jobs:
 
