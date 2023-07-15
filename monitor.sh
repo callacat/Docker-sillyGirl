@@ -26,7 +26,8 @@ monitor_output() {
 
 # 主函数
 main() {
-    start_sillyGirl | monitor_output  # 使用管道符号连接两个命令
+    start_sillyGirl &
+    monitor_output  # 使用管道符号连接两个命令
 }
 
 main "$@"
