@@ -3,7 +3,8 @@ name: test-Build
 on:
   push:
     paths:
-      - '.github/workflows/docker-test.yml'
+      - DockerFiles/Dockerfiletest
+      # - '.github/workflows/docker-test.yml'
   workflow_dispatch:
 
 jobs:
