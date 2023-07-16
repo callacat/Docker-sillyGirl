@@ -3,7 +3,7 @@
 # 启动sillyGirl程序并监控输出
 start_sillyGirl() {
     # echo "Starting sillyGirl..."
-    /usr/local/sillyGirl/sillyGirl -t
+    exec /usr/local/sillyGirl/sillyGirl -t
 }
 
 # 重启当前容器
