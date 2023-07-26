@@ -2,12 +2,8 @@
 
 # 启动sillyGirl程序并监控输出
 start_sillyGirl() {
-    if cp /usr/local/bin/sillyGirl /etc/sillyplus/sillyGirl; then
-        echo "Copy successful!" >> /etc/sillyplus/logs.txt
-    else
-        echo "Copy failed!" >> /etc/sillyplus/logs.txt
-    fi
-    chmod +x /etc/sillyplus/sillyGirl
+    ln -s /etc/sillyplus/language /usr/local/sillyGirl/language
+    ln -s /etc/sillyplus/plugins /usr/local/sillyGirl/plugins
     exec /etc/sillyplus/sillyGirl -t
 }
 
