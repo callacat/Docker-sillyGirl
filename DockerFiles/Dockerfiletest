@@ -1,4 +1,4 @@
-FROM node:apline
+FROM node:latest-apline
 
 ENV LANG=C.UTF-8
 
