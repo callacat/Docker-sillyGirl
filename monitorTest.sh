@@ -2,12 +2,9 @@
 
 # 软链接
 ln() {
+    mkdir -p /usr/local/sillyGirl/plugins
+    mkdir -p /usr/local/sillyGirl/language
     ln -s /usr/local/sillyGirl/plugins /etc/sillyplus/plugins
-    if [ $? -eq 0 ] && [ -L /etc/sillyplus/plugins ] && [ -e /etc/sillyplus/plugins ]; then
-        echo "软链接创建成功并可用"
-    else
-        echo "软链接创建失败或不可用"
-    fi
     ln -s /usr/local/sillyGirl/language /etc/sillyplus/language
 }
 
