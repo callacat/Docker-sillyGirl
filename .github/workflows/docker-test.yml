@@ -4,8 +4,8 @@ on:
   push:
     paths:
       - DockerFiles/Dockerfiletest
-      - monitor.sh
-      # - '.github/workflows/docker-test.yml'
+      - monitorTest.sh
+      - '.github/workflows/docker-test.yml'
   workflow_dispatch:
 
 jobs:
