@@ -2,8 +2,6 @@
 
 # 启动sillyGirl程序并监控输出
 start_sillyGirl() {
-    ln -s /etc/sillyplus/language /usr/local/sillyGirl/language
-    ln -s /etc/sillyplus/plugins /usr/local/sillyGirl/plugins
     exec /usr/local/sillyGirl/sillyGirl -t
 }
 
