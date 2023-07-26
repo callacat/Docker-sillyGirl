@@ -11,6 +11,7 @@ COPY monitor.sh /usr/local/bin/monitor.sh
 # 创建目录并创建软链接
 RUN mkdir -p /usr/local/sillyGirl/plugins \
     && mkdir /usr/local/sillyGirl/language \
+    && mkdir /etc/sillyplus \
     && ln -s /usr/local/sillyGirl/plugins /etc/sillyplus/plugins \
     && ln -s /usr/local/sillyGirl/language /etc/sillyplus/language
 
