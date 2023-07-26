@@ -1,0 +1,46 @@
+name: test-Build
+
+on:
+  push:
+    paths:
+      - DockerFiles/Dockerfiledev
+      - '.github/workflows/docker-dev.yml'
+  workflow_dispatch:
+
+jobs:
+
+  build_Docker:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v2
+      # with:
+      #   version: v0.9.1
+
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push amd64
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./DockerFiles/Dockerfiledev
+          # 所需要的体系结构，可以在 Available platforms 步骤中获取所有的可用架构
+        platforms: linux/amd64
+        push: true
+          # 给清单打上多个标签
+        tags: ${{ secrets.DOCKER_USERNAME }}/silly:dev
