@@ -8,8 +8,8 @@ start_sillyGirl() {
 
 # 重启当前容器
 restart_container() {
-    echo "Restarting container..."
-    sleep 1
+    # echo "Restarting container..."
+    # sleep 1
     kill -s TERM 1
 }
 
