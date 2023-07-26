@@ -1,4 +1,4 @@
-FROM node:latest-apline
+FROM node:latest-alpine
 
 ENV LANG=C.UTF-8
 
