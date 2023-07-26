@@ -2,6 +2,10 @@ FROM node:latest
 
 ENV LANG=C.UTF-8
 
+# 设置工作目录
+WORKDIR /usr/local/sillyGirl
+
+# 复制脚本文件
 COPY monitor.sh /usr/local/bin/monitor.sh
 
 # 创建目录并创建软链接
