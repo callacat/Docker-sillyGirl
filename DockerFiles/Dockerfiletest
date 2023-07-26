@@ -18,7 +18,7 @@ RUN mkdir -p /usr/local/sillyGirl/plugins \
 # 下载 sillyGirl 程序
 RUN wget https://github.com/cdle/sillyGirl/releases/download/main/sillyGirl_linux_amd64 \
     && mv sillyGirl_linux_amd64 sillyGirl \
-    && chmod +x sillyGirl \
+    && chmod +x sillyGirl && chmod +x /usr/local/bin/monitor.sh \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 ENTRYPOINT ["/usr/local/bin/monitor.sh"]
