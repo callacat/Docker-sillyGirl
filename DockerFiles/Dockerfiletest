@@ -4,10 +4,16 @@ ENV LANG=C.UTF-8
 
 COPY monitor.sh /usr/local/bin/monitor.sh
 
-RUN chmod +x /usr/local/bin/monitor.sh \
-    && mkdir /usr/local/sillyGirl && cd /usr/local/sillyGirl \
-    && wget https://github.com/cdle/sillyGirl/releases/download/main/sillyGirl_linux_amd64 \
-    && mv sillyGirl_linux_amd64 sillyGirl && chmod 777 sillyGirl \
+# 创建目录并创建软链接
+RUN mkdir -p /usr/local/sillyGirl/plugins \
+    && mkdir /usr/local/sillyGirl/language \
+    && ln -s /usr/local/sillyGirl/plugins /etc/sillyplus/plugins \
+    && ln -s /usr/local/sillyGirl/language /etc/sillyplus/language
+
+# 下载 sillyGirl 程序
+RUN wget https://github.com/cdle/sillyGirl/releases/download/main/sillyGirl_linux_amd64 \
+    && mv sillyGirl_linux_amd64 sillyGirl \
+    && chmod +x sillyGirl \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 ENTRYPOINT ["/usr/local/bin/monitor.sh"]
