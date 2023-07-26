@@ -2,14 +2,11 @@
 
 # 启动sillyGirl程序并监控输出
 start_sillyGirl() {
-    # echo "Starting sillyGirl..."
     exec /usr/local/sillyGirl/sillyGirl -t
 }
 
 # 重启当前容器
 restart_container() {
-    # echo "Restarting container..."
-    # sleep 1
     kill -s TERM 1
 }
 

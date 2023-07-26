@@ -2,13 +2,21 @@ FROM alpine:latest
 
 ENV LANG=C.UTF-8
 
+# 设置工作目录
+WORKDIR /usr/local/sillyGirl
+
+# 复制脚本文件
 COPY monitor.sh /usr/local/bin/monitor.sh
 
-RUN chmod +x /usr/local/bin/monitor.sh \
-    && mkdir /usr/local/sillyGirl && cd /usr/local/sillyGirl \
-    && wget https://github.com/cdle/sillyGirl/releases/download/main/sillyGirl_linux_amd64 \
-    && mv sillyGirl_linux_amd64 sillyGirl && chmod 777 sillyGirl \
+# 下载 sillyGirl 程序
+RUN wget https://github.com/cdle/sillyGirl/releases/download/main/sillyGirl_linux_amd64 \
+    && mv sillyGirl_linux_amd64 sillyGirl && mkdir -p /etc/sillyplus/language \
+    && mkdir /etc/sillyplus/plugins && chmod +x sillyGirl && chmod +x /usr/local/bin/monitor.sh \
     && mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 \
-    && apk add --no-cache tzdata procps && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    && apk add --no-cache tzdata procps && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && ln -s /etc/sillyplus/language /usr/local/sillyGirl/language \
+    && ln -s /etc/sillyplus/plugins /usr/local/sillyGirl/plugins
+
+VOLUME /etc/sillyplus
 
 ENTRYPOINT ["/usr/local/bin/monitor.sh"]
