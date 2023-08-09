@@ -2,6 +2,11 @@
 
 # 检查并创建目标路径
 prepare_target_paths() {
+    if [ ! -d "/etc/sillyplus" ]; then
+        echo "/etc/sillyplus 目录不存在，开始创建"
+        mkdir -p /etc/sillyplus
+    fi
+
     if [ ! -d "/etc/sillyplus/language" ]; then
         echo "/etc/sillyplus/language 目录不存在，开始创建"
         mkdir -p /etc/sillyplus/language
