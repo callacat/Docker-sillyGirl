@@ -13,9 +13,7 @@ RUN wget https://github.com/cdle/sillyGirl/releases/download/main/sillyGirl_linu
     && mv sillyGirl_linux_amd64 sillyGirl && mkdir -p /etc/sillyplus/language \
     && mkdir /etc/sillyplus/plugins && chmod +x sillyGirl && chmod +x /usr/local/bin/monitor.sh \
     && mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 \
-    && apk add --no-cache tzdata procps && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && ln -s /etc/sillyplus/language /usr/local/sillyGirl/language \
-    && ln -s /etc/sillyplus/plugins /usr/local/sillyGirl/plugins
+    && apk add --no-cache tzdata procps && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 VOLUME /etc/sillyplus
 
