@@ -1,5 +1,24 @@
 #!/bin/sh
 
+# 检查并创建目标路径
+prepare_target_paths() {
+    if [ ! -d "/etc/sillyplus/language" ]; then
+        mkdir -p /etc/sillyplus/language
+    fi
+    
+    if [ ! -d "/etc/sillyplus/plugins" ]; then
+        mkdir -p /etc/sillyplus/plugins
+    fi
+
+    if [ ! -L "/usr/local/sillyGirl/language" ]; then
+        ln -s /etc/sillyplus/language /usr/local/sillyGirl/language
+    fi
+
+    if [ ! -L "/usr/local/sillyGirl/plugins" ]; then
+        ln -s /etc/sillyplus/plugins /usr/local/sillyGirl/plugins
+    fi
+}
+
 # 启动sillyGirl程序并监控输出
 start_sillyGirl() {
     exec /usr/local/sillyGirl/sillyGirl -t
@@ -23,7 +42,7 @@ monitor_output() {
 
 # 主函数
 main() {
-    mkdir /etc/sillyplus/language /etc/sillyplus/plugins
+    prepare_target_paths # 检查并创建目标路径
     start_sillyGirl &
     monitor_output # 启动监控程序输出并执行操作
 }
