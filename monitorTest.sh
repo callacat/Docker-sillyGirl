@@ -23,8 +23,8 @@ monitor_output() {
 
 # 主函数
 main() {
-    ln -s /usr/local/sillyGirl/language ./language
-    ln -s /usr/local/sillyGirl/plugins ./plugins
+    ln -s /usr/local/sillyGirl/language /etc/sillyplus/language
+    ln -s /usr/local/sillyGirl/plugins /etc/sillyplus/plugins
     start_sillyGirl &
     monitor_output # 启动监控程序输出并执行操作
 }
