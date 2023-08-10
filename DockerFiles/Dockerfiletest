@@ -12,12 +12,12 @@ COPY monitorTest.sh /usr/local/bin/monitor.sh
 COPY sillyGirl_linux_amd64 /usr/local/sillyGirl/sillyGirl
 
 # 创建并写入源配置到sources.list文件
-RUN echo "deb https://mirrors.ustc.edu.cn/debian/ buster main" > /etc/apt/sources.list \
-    && echo "deb-src https://mirrors.ustc.edu.cn/debian/ buster main" >> /etc/apt/sources.list \
-    && echo "deb https://mirrors.ustc.edu.cn/debian/ buster-updates main" >> /etc/apt/sources.list \
-    && echo "deb-src https://mirrors.ustc.edu.cn/debian/ buster-updates main" >> /etc/apt/sources.list \
-    && echo "deb https://mirrors.ustc.edu.cn/debian-security/ buster/updates main" >> /etc/apt/sources.list \
-    && echo "deb-src https://mirrors.ustc.edu.cn/debian-security/ buster/updates main" >> /etc/apt/sources.list
+RUN echo "deb http://mirrors.ustc.edu.cn/debian/ buster main" > /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.ustc.edu.cn/debian/ buster main" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.ustc.edu.cn/debian/ buster-updates main" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.ustc.edu.cn/debian/ buster-updates main" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.ustc.edu.cn/debian-security/ buster/updates main" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.ustc.edu.cn/debian-security/ buster/updates main" >> /etc/apt/sources.list
 
 # 创建软链接并设置时区
 RUN apt-get update \
