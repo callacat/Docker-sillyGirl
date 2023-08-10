@@ -14,7 +14,7 @@ prepare_directory() {
     local dir="$1"
     if [ ! -d "$dir" ]; then
         mkdir -p "$dir"
-        # echo "初次使用，开始初始化目录"
+        echo "初次使用，开始初始化目录 $dir"
     fi
     chmod 755 "$dir" # 赋予必要的权限
 }
@@ -25,7 +25,7 @@ create_symbolic_link() {
     local target="$2"
     if [ ! -L "$target" ]; then
         ln -s "$source" "$target"
-        echo "初次使用，开始初始化依赖目录"
+        echo "初次使用，开始初始化软链接 $target"
     fi
 }
 
