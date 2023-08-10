@@ -26,9 +26,9 @@ jobs:
       # with:
       #   version: v0.9.1
 
-      - name: get sillyGirl
-        run: |
-          wget https://github.com/cdle/sillyGirl/releases/download/main/sillyGirl_linux_amd64
+    - name: get sillyGirl
+      run: |
+        wget https://github.com/cdle/sillyGirl/releases/download/main/sillyGirl_linux_amd64
 
     - name: Available platforms
       run: echo ${{ steps.buildx.outputs.platforms }}
