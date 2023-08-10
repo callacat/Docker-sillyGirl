@@ -6,17 +6,17 @@ prepare_target_paths() {
         echo "/usr/local/sillyGirl/language 目录不存在，开始创建"
         mkdir -p /usr/local/sillyGirl/language
     fi
-
+    chmod 777 /usr/local/sillyGirl/language
     if [ ! -d "/usr/local/sillyGirl/plugins" ]; then
         echo "/usr/local/sillyGirl/plugins 目录不存在，开始创建"
         mkdir -p /usr/local/sillyGirl/plugins
     fi
-
+    chmod 777 /usr/local/sillyGirl/plugins
     if [ ! -L "/etc/sillyplus/language" ]; then
         echo "指向 usr/local/sillyGirl/language 的软链接不存在，开始创建"
         ln -s /usr/local/sillyGirl/language /etc/sillyplus/language
     fi
-
+    
     if [ ! -L "/etc/sillyplus/plugins" ]; then
         echo "指向 usr/local/sillyGirl/plugins 的软链接不存在，开始创建"
         ln -s /usr/local/sillyGirl/plugins /etc/sillyplus/plugins
