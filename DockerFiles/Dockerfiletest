@@ -13,7 +13,6 @@ COPY monitorTest.sh /usr/local/bin/monitor.sh
 # 下载 sillyGirl 程序
 RUN wget https://github.com/cdle/sillyGirl/releases/download/main/sillyGirl_linux_amd64 \
     && mv sillyGirl_linux_amd64 sillyGirl && chmod +x sillyGirl \
-    && mkdir plugins language && chmod +x plugins language \
     && mkdir /etc/sillyplus && chmod +x /usr/local/bin/monitor.sh \
     && mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 \
     && apk add --no-cache tzdata procps && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
