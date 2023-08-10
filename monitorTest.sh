@@ -1,7 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 
 # 检查并创建目标路径
 prepare_target_paths() {
+    # if [ ! -d "/etc/sillyplus" ]; then
+    #     echo "/etc/sillyplus 目录不存在，开始创建"
+    #     mkdir -p /etc/sillyplus
+    # fi
+
+    # chmod 777 /etc/sillyplus
+
     if [ ! -d "/etc/sillyplus/language" ]; then
         echo "/etc/sillyplus/language 目录不存在，开始创建"
         mkdir -p /etc/sillyplus/language
@@ -23,32 +30,36 @@ prepare_target_paths() {
         echo "指向 usr/local/sillyGirl/plugins 的软链接不存在，开始创建"
         ln -s /etc/sillyplus/plugins /usr/local/sillyGirl/
     fi
+
 }
 
 # 启动sillyGirl程序并监控输出
-start_and_monitor_sillyGirl() {
+start_sillyGirl() {
+    exec /usr/local/sillyGirl/sillyGirl -t
+}
+
+# 重启当前容器
+restart_container() {
+    echo "触发重启"
+    # kill -s TERM 1
+}
+
+# 监控程序输出并执行操作
+monitor_output() {
+    # echo "进入监控程序..."
     /usr/local/sillyGirl/sillyGirl -t | while IFS= read -r line; do
-        echo "$line"
+        echo "$line" # 输出到标准输出（stdout）
         if echo "$line" | grep -q "程序以静默模式运行"; then
-            echo "触发重启"
-            # restart_container
+            restart_container # 出现指定字样时重启当前容器
         fi
     done
 }
 
-# 重启当前容器
-# restart_container() {
-#     # 从 /etc/sillyplus/sillyGirl.pid 文件中读取进程 ID
-#     pid=$(cat /etc/sillyplus/sillyGirl.pid)
-
-#     # 发送 TERM 信号给指定的进程，让它优雅地终止
-#     kill -s TERM $pid
-# }
-
 # 主函数
 main() {
-    prepare_target_paths
-    start_and_monitor_sillyGirl
+    prepare_target_paths # 检查并创建目标路径
+    start_sillyGirl &
+    monitor_output # 启动监控程序输出并执行操作
 }
 
 main "$@"

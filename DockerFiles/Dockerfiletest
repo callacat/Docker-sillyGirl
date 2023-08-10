@@ -1,6 +1,7 @@
 FROM node:slim
 
-ENV LANG=C.UTF-8
+ENV LANG=C.UTF-8 \
+    PATH=$PATH:/bin
 
 VOLUME /etc/sillyplus
 
