@@ -42,7 +42,7 @@ start_and_monitor_sillyGirl() {
 # 重启当前容器
 restart_container() {
     # 从 /etc/sillyplus/sillyGirl.pid 文件中读取进程 ID
-    pid=$ (cat /etc/sillyplus/sillyGirl.pid)
+    pid=$(cat /etc/sillyplus/sillyGirl.pid)
 
     # 发送 TERM 信号给指定的进程，让它优雅地终止
     kill -s TERM $pid
