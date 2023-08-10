@@ -5,8 +5,8 @@ prepare_target_paths() {
     prepare_directory "/etc/sillyplus/language"
     prepare_directory "/etc/sillyplus/plugins"
 
-    create_symbolic_link "/etc/sillyplus/language" "/usr/local/sillyGirl/language"
-    create_symbolic_link "/etc/sillyplus/plugins" "/usr/local/sillyGirl/plugins"
+    create_symbolic_link "/etc/sillyplus/*" "/usr/local/sillyGirl/"
+    # create_symbolic_link "/etc/sillyplus/plugins" "/usr/local/sillyGirl/"
 }
 
 # 检查并创建目录
@@ -25,7 +25,7 @@ create_symbolic_link() {
     local target="$2"
     if [ ! -L "$target" ]; then
         ln -s "$source" "$target"
-        echo "初次使用，开始初始化软链接 $target"
+        echo "初次使用，开始初始化软链接"
     fi
 }
 
