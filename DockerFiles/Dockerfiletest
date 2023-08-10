@@ -12,9 +12,14 @@ COPY monitorTest.sh /usr/local/bin/monitor.sh
 COPY sillyGirl_linux_amd64 /usr/local/sillyGirl/sillyGirl
 
 # 创建软链接并设置时区
-RUN chmod +x /usr/local/sillyGirl/sillyGirl \
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
+    && sed -i 's/security.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
+    && apt-get update && apt-get install kill -y \
+    && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /etc/sillyplus \
     && chmod +x /usr/local/bin/monitor.sh \
-    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && npm config set registry https://registry.npm.taobao.org \
+    && yarn config set registry https://registry.npm.taobao.org
 
 ENTRYPOINT ["/usr/local/bin/monitor.sh"]
