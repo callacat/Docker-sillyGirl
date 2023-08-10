@@ -13,7 +13,7 @@ COPY sillyGirl_linux_amd64 /usr/local/sillyGirl/sillyGirl
 
 # 下载 sillyGirl 程序
 RUN chmod +x /usr/local/sillyGirl/sillyGirl \
-    mkdir /etc/sillyplus && chmod +x /usr/local/bin/monitor.sh \
+    && mkdir /etc/sillyplus && chmod +x /usr/local/bin/monitor.sh \
     && mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2 \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
