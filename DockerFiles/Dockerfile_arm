@@ -1,21 +1,24 @@
 FROM alpine:latest
 
-ENV LANG=C.UTF-8
-
 # 设置工作目录
 WORKDIR /usr/local/sillyGirl
 
-# 复制脚本文件
+# 复制文件
 COPY monitor.sh /usr/local/bin/monitor.sh
+COPY sillyGirl_linux_arm64 /usr/local/sillyGirl/sillyGirl
 
-# 下载 sillyGirl 程序
-RUN wget https://github.com/cdle/sillyGirl/releases/download/main/sillyGirl_linux_arm64 \
-    && mv sillyGirl_linux_arm64 sillyGirl && mkdir -p /etc/sillyplus/language \
-    && mkdir /etc/sillyplus/plugins && chmod +x sillyGirl && chmod +x /usr/local/bin/monitor.sh \
-    && apk add --no-cache tzdata procps && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && ln -s /etc/sillyplus/language /usr/local/sillyGirl/language \
-    && ln -s /etc/sillyplus/plugins /usr/local/sillyGirl/plugins
+# 安装基础软件包并修改源
+RUN apk update \
+    && apk add --no-cache tzdata procps \
+    && echo "http://mirrors.ustc.edu.cn/alpine/latest-stable/main" > /etc/apk/repositories \
+    && echo "http://mirrors.ustc.edu.cn/alpine/latest-stable/community" >> /etc/apk/repositories \
+    && apk update \
+    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && rm -rf /var/cache/apk/* \
+    && chmod +x /usr/local/bin/monitor.sh \
+    && chmod +x /usr/local/sillyGirl/sillyGirl
 
+# 默认映射目录
 VOLUME /etc/sillyplus
 
 ENTRYPOINT ["/usr/local/bin/monitor.sh"]
