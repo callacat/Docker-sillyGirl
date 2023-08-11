@@ -1,7 +1,5 @@
 FROM alpine:latest
 
-ENV PATH="/usr/local/sillyGirl/language/node:${PATH}"
-
 # 设置工作目录
 WORKDIR /usr/local/sillyGirl
 
