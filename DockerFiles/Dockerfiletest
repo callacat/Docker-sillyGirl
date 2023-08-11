@@ -1,5 +1,7 @@
 FROM alpine:latest
 
+ENV PATH="/usr/local/sillyGirl/language/node:${PATH}"
+
 # 设置工作目录
 WORKDIR /usr/local/sillyGirl
 
@@ -16,11 +18,7 @@ RUN apk update \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && rm -rf /var/cache/apk/* \
     && chmod +x /usr/local/bin/monitor.sh \
-    && chmod +x sillyGirl \
-    && mkdir -p language/node plugins \
-    && chmod +x language plugins
-
-ENV PATH="/usr/local/sillyGirl/language/node:${PATH}"
+    && chmod +x sillyGirl
 
 # 默认映射目录
 VOLUME /etc/sillyplus
