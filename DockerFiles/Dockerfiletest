@@ -1,4 +1,4 @@
-FROM node:slim
+FROM debian:slim
 
 ENV LANG=C.UTF-8
 
