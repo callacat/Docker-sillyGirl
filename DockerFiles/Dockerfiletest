@@ -11,7 +11,7 @@ COPY sillyGirl_linux_amd64 /usr/local/sillyGirl/sillyGirl
 
 # 安装基础软件包，创建并写入源配置到sources.list文件
 RUN apt-get update \
-    && apt-get install -y procps \
+    && apt-get install -y procps net-tools wget sudo curl \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean \
     && rm -rf /etc/apt/sources.list \

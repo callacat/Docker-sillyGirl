@@ -1,26 +1,26 @@
-#!/bin/sh
+#!/bin/bash
 
 # 检查并创建目标路径
 prepare_target_paths() {
     if [ ! -d "/etc/sillyplus/language" ]; then
-        echo "/etc/sillyplus/language 目录不存在，开始创建"
+        # echo "/etc/sillyplus/language 目录不存在，开始创建"
         mkdir -p /etc/sillyplus/language
     fi
 
     if [ ! -d "/etc/sillyplus/plugins" ]; then
-        echo "/etc/sillyplus/plugins 目录不存在，开始创建"
+        # echo "/etc/sillyplus/plugins 目录不存在，开始创建"
         mkdir -p /etc/sillyplus/plugins
     fi
 
     chmod 777 /etc/sillyplus/language /etc/sillyplus/plugins
 
     if [ ! -L "/usr/local/sillyGirl/language" ]; then
-        echo "指向 usr/local/sillyGirl/language 的软链接不存在，开始创建"
+        # echo "指向 usr/local/sillyGirl/language 的软链接不存在，开始创建"
         ln -s /etc/sillyplus/language /usr/local/sillyGirl/
     fi
 
     if [ ! -L "/usr/local/sillyGirl/plugins" ]; then
-        echo "指向 usr/local/sillyGirl/plugins 的软链接不存在，开始创建"
+        # echo "指向 usr/local/sillyGirl/plugins 的软链接不存在，开始创建"
         ln -s /etc/sillyplus/plugins /usr/local/sillyGirl/
     fi
 }
