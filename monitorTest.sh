@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # 检查并创建目标路径
 prepare_target_paths() {
