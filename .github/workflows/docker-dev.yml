@@ -5,6 +5,7 @@ on:
     paths:
       - DockerFiles/Dockerfiledev
       - '.github/workflows/docker-dev.yml'
+      - 'last_sha.txt'
   workflow_dispatch:
 
 jobs:
