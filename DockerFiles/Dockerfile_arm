@@ -1,4 +1,6 @@
-FROM alpine:latest
+FROM debian:12-slim
+
+ENV LANG=C.UTF-8
 
 # 设置工作目录
 WORKDIR /usr/local/sillyGirl
@@ -7,16 +9,25 @@ WORKDIR /usr/local/sillyGirl
 COPY monitor.sh /usr/local/bin/monitor.sh
 COPY sillyGirl_linux_arm64 /usr/local/sillyGirl/sillyGirl
 
-# 安装基础软件包并修改源
-RUN apk update \
-    && apk add --no-cache tzdata procps \
-    && echo "http://mirrors.ustc.edu.cn/alpine/latest-stable/main" > /etc/apk/repositories \
-    && echo "http://mirrors.ustc.edu.cn/alpine/latest-stable/community" >> /etc/apk/repositories \
-    && apk update \
-    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && rm -rf /var/cache/apk/* \
+# 安装基础软件包，创建并写入源配置到sources.list文件
+RUN apt-get update \
+    && apt-get install -y procps net-tools wget sudo curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean \
+    && rm -rf /etc/apt/sources.list \
+    && echo "deb http://mirrors.ustc.edu.cn/debian/ bookworm main" > /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.ustc.edu.cn/debian/ bookworm main" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.ustc.edu.cn/debian/ bookworm-updates main" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.ustc.edu.cn/debian/ bookworm-updates main" >> /etc/apt/sources.list \
+    && echo "deb http://mirrors.ustc.edu.cn/debian-security/ bookworm-security main" >> /etc/apt/sources.list \
+    && echo "deb-src http://mirrors.ustc.edu.cn/debian-security/ bookworm-security main" >> /etc/apt/sources.list \
+    && apt-get update
+
+# 分配权限并设置时区
+RUN mkdir -p /etc/sillyplus \
     && chmod +x /usr/local/bin/monitor.sh \
-    && chmod +x /usr/local/sillyGirl/sillyGirl
+    && chmod +x /usr/local/sillyGirl/sillyGirl \
+    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # 默认映射目录
 VOLUME /etc/sillyplus

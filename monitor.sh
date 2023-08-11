@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # 检查并创建目标路径
 prepare_target_paths() {
@@ -23,12 +23,12 @@ prepare_target_paths() {
 
 # 启动sillyGirl程序并监控输出
 start_sillyGirl() {
-    exec /usr/local/sillyGirl/sillyGirl -t
+    (exec /usr/local/sillyGirl/sillyGirl -t) &
 }
 
 # 监控程序输出并执行操作
 monitor_output() {
-    /usr/local/sillyGirl/sillyGirl -t | while IFS= read -r line; do
+    /usr/local/sillyGirl/sillyGirl -t | tee /tmp/output.txt | while IFS= read -r line; do
         echo "$line" # 输出到标准输出（stdout）
     done
 }
