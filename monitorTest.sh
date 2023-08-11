@@ -25,8 +25,14 @@ prepare_target_paths() {
     fi
 }
 
-# 启动sillyGirl程序并显示到标准输出
-start_and_monitor_sillyGirl() {
+# 启动sillyGirl程序并监控输出
+start_sillyGirl() {
+    exec /usr/local/sillyGirl/sillyGirl -t
+}
+
+# 监控程序输出并执行操作
+monitor_output() {
+    # echo "进入监控程序..."
     /usr/local/sillyGirl/sillyGirl -t | while IFS= read -r line; do
         echo "$line" # 输出到标准输出（stdout）
     done
@@ -34,8 +40,9 @@ start_and_monitor_sillyGirl() {
 
 # 主函数
 main() {
-    prepare_target_paths
-    start_and_monitor_sillyGirl
+    prepare_target_paths # 检查并创建目标路径
+    start_sillyGirl &
+    monitor_output # 启动监控程序输出并执行操作
 }
 
 main "$@"
